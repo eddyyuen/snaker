@@ -1,0 +1,248 @@
+2019/07/31 11:33:56 [emerg] 1544#23668: CreateFile() "./mime.types" failed (2: The system cannot find the file specified) in D:\Sourcecode\github\RestyGateway/conf/nginx.conf:13
+2019/07/31 11:36:36 [error] 19724#20284: init_by_lua error: init_by_lua:2: module 'resty-gateway.gateway' not found:
+	no field package.preload['resty-gateway.gateway']
+	no file 'lualib/resty-gateway\gateway.lua'
+	no file 'lualib/resty/resty-gateway\gateway.lua'
+	no file 'resty-gateway\gateway.lua'
+	no file './site/lualib/resty-gateway\gateway.ljbc'
+	no file './site/lualib/resty-gateway\gateway/init.ljbc'
+	no file './lualib/resty-gateway\gateway.ljbc'
+	no file './lualib/resty-gateway\gateway/init.ljbc'
+	no file './site/lualib/resty-gateway\gateway.lua'
+	no file './site/lualib/resty-gateway\gateway/init.lua'
+	no file './lualib/resty-gateway\gateway.lua'
+	no file './lualib/resty-gateway\gateway/init.lua'
+	no file '.\resty-gateway\gateway.lua'
+	no file 'D:\ProgramFiles\openresty-1.15.8.1-win64\lualib\resty-gateway\gateway.lua'
+	no file 'D:\ProgramFiles\openresty-1.15.8.1-win64\lua\resty-gateway\gateway.lua'
+	no file 'D:\ProgramFiles\openresty-1.15.8.1-win64\lua\resty-gateway\gateway\init.lua'
+	no file './site/lualib/resty-gateway\gateway.so'
+	no file './lualib/resty-gateway\gateway.so'
+	no file '.\resty-gateway\gateway.dll'
+	no file 'D:\ProgramFiles\openresty-1.15.8.1-win64\lualib\resty-gateway\gateway.so'
+	no file 'D:\ProgramFiles\openresty-1.15.8.1-win64\resty-gateway\gateway.dll'
+	no file 'D:\ProgramFiles\openresty-1.15.8.1-win64\loadall.dll'
+	no file './site/lualib/resty-gateway.so'
+	no file './lualib/resty-gateway.so'
+	no file '.\resty-gateway.dll'
+	no file 'D:\ProgramFiles\openresty-1.15.8.1-win64\lualib\resty-gateway.so'
+	no file 'D:\ProgramFiles\openresty-1.15.8.1-win64\resty-gateway.dll'
+	no file 'D:\ProgramFiles\openresty-1.15.8.1-win64\loadall.dll'
+stack traceback:
+	[C]: in function 'require'
+	init_by_lua:2: in main chunk
+2019/07/31 11:39:46 [notice] 27108#15256: signal process started
+2019/07/31 11:39:46 [error] 27108#15256: invalid PID number "" in "D:\Sourcecode\github\RestyGateway/logs/nginx.pid"
+2019/07/31 11:39:53 [error] 13644#25848: [lua] gateway.lua:53: init(): Startup error: ...ourcecode\github\RestyGateway//resty-gateway\gateway.lua:44: attempt to index global 'config_loader' (a nil value)
+2019/07/31 11:41:49 [notice] 25972#16364: signal process started
+2019/07/31 11:41:49 [error] 25972#16364: invalid PID number "" in "D:\Sourcecode\github\RestyGateway/logs/nginx.pid"
+2019/07/31 11:41:53 [error] 13012#15776: [lua] config_loader.lua:11: load(): No configuration file at: D:\Sourcecode\github\RestyGateway//conf/resty_gateway.conf
+2019/07/31 11:42:43 [notice] 28184#26512: signal process started
+2019/07/31 11:42:43 [error] 28184#26512: invalid PID number "" in "D:\Sourcecode\github\RestyGateway/logs/nginx.pid"
+2019/07/31 11:42:46 [error] 9376#26176: [lua] gateway.lua:54: init(): Startup error: ...ourcecode\github\RestyGateway//resty-gateway\gateway.lua:46: module 'resty-gateway.store.mysql_store' not found:
+	no field package.preload['resty-gateway.store.mysql_store']
+	no file 'D:\Sourcecode\github\RestyGateway//lualib/resty-gateway\store\mysql_store.lua'
+	no file 'D:\Sourcecode\github\RestyGateway//lualib/resty/resty-gateway\store\mysql_store.lua'
+	no file 'D:\Sourcecode\github\RestyGateway//resty-gateway\store\mysql_store.lua'
+	no file './site/lualib/resty-gateway\store\mysql_store.ljbc'
+	no file './site/lualib/resty-gateway\store\mysql_store/init.ljbc'
+	no file './lualib/resty-gateway\store\mysql_store.ljbc'
+	no file './lualib/resty-gateway\store\mysql_store/init.ljbc'
+	no file './site/lualib/resty-gateway\store\mysql_store.lua'
+	no file './site/lualib/resty-gateway\store\mysql_store/init.lua'
+	no file './lualib/resty-gateway\store\mysql_store.lua'
+	no file './lualib/resty-gateway\store\mysql_store/init.lua'
+	no file '.\resty-gateway\store\mysql_store.lua'
+	no file 'D:\ProgramFiles\openresty-1.15.8.1-win64\lualib\resty-gateway\store\mysql_store.lua'
+	no file 'D:\ProgramFiles\openresty-1.15.8.1-win64\lua\resty-gateway\store\mysql_store.lua'
+	no file 'D:\ProgramFiles\openresty-1.15.8.1-win64\lua\resty-gateway\store\mysql_store\init.lua'
+	no file './site/lualib/resty-gateway\store\mysql_store.so'
+	no file './lualib/resty-gateway\store\mysql_store.so'
+	no file '.\resty-gateway\store\mysql_store.dll'
+	no file 'D:\ProgramFiles\openresty-1.15.8.1-win64\lualib\resty-gateway\store\mysql_store.so'
+	no file 'D:\ProgramFiles\openresty-1.15.8.1-win64\resty-gateway\store\mysql_store.dll'
+	no file 'D:\ProgramFiles\openresty-1.15.8.1-win64\loadall.dll'
+	no file './site/lualib/resty-gateway.so'
+	no file './lualib/resty-gateway.so'
+	no file '.\resty-gateway.dll'
+	no file 'D:\ProgramFiles\openresty-1.15.8.1-win64\lualib\resty-gateway.so'
+	no file 'D:\ProgramFiles\openresty-1.15.8.1-win64\resty-gateway.dll'
+	no file 'D:\ProgramFiles\openresty-1.15.8.1-win64\loadall.dll'
+2019/07/31 11:49:36 [notice] 23852#17564: signal process started
+2019/07/31 11:49:36 [error] 23852#17564: invalid PID number "" in "D:\Sourcecode\github\RestyGateway/logs/nginx.pid"
+2019/07/31 11:49:39 [error] 23668#28176: [lua] gateway.lua:54: init(): Startup error: ...ourcecode\github\RestyGateway//resty-gateway\gateway.lua:46: attempt to index upvalue 'config' (a nil value)
+2019/07/31 11:52:36 [notice] 13040#25684: signal process started
+2019/07/31 11:52:36 [error] 13040#25684: invalid PID number "" in "D:\Sourcecode\github\RestyGateway/logs/nginx.pid"
+2019/07/31 11:52:37 [error] 10888#21516: [lua] gateway.lua:45: D:\Sourcecode\github\RestyGateway//conf/resty_gateway.conf
+2019/07/31 11:52:37 [error] 10888#21516: [lua] gateway.lua:55: init(): Startup error: ...ourcecode\github\RestyGateway//resty-gateway\gateway.lua:47: attempt to index upvalue 'config' (a nil value)
+2019/07/31 11:54:12 [error] 22160#27752: [lua] gateway.lua:45: D:/Sourcecode/github/RestyGateway//conf/resty_gateway.conf
+2019/07/31 11:54:12 [error] 22160#27752: [lua] gateway.lua:55: init(): Startup error: ...ourcecode/github/RestyGateway//resty-gateway\gateway.lua:47: attempt to index upvalue 'config' (a nil value)
+2019/07/31 11:55:01 [error] 7496#21784: [lua] gateway.lua:47: D:/Sourcecode/github/RestyGateway//conf/resty_gateway.conf
+2019/07/31 11:55:01 [error] 7496#21784: [lua] gateway.lua:56: init(): Startup error: ...ourcecode/github/RestyGateway//resty-gateway\gateway.lua:48: attempt to index upvalue 'config' (a nil value)
+2019/07/31 11:55:39 [error] 15932#7564: [lua] gateway.lua:47: D:/Sourcecode/github/RestyGateway/conf/resty_gateway.conf
+2019/07/31 11:55:39 [error] 15932#7564: [lua] gateway.lua:56: init(): Startup error: ...ourcecode/github/RestyGateway//resty-gateway\gateway.lua:48: attempt to index upvalue 'config' (a nil value)
+2019/07/31 11:57:53 [error] 10716#22112: [lua] gateway.lua:47: D:/Sourcecode/github/RestyGateway/conf/resty_gateway.conf
+2019/07/31 11:57:53 [error] 10716#22112: [lua] gateway.lua:56: init(): Startup error: ...ourcecode/github/RestyGateway//resty-gateway\gateway.lua:48: attempt to index upvalue 'config' (a nil value)
+2019/07/31 11:58:52 [error] 22420#20772: [lua] gateway.lua:47: D:/Sourcecode/github/RestyGateway/conf/resty_gateway.conf
+2019/07/31 11:58:52 [error] 22420#20772: [lua] gateway.lua:56: init(): Startup error: ...ourcecode/github/RestyGateway//resty-gateway\gateway.lua:17: attempt to index global 'utils' (a nil value)
+2019/07/31 12:00:15 [error] 7404#9976: [lua] gateway.lua:47: D:/Sourcecode/github/RestyGateway/conf/resty_gateway.conf
+2019/07/31 12:00:15 [error] 18376#17268: [lua] gateway.lua:47: D:/Sourcecode/github/RestyGateway/conf/resty_gateway.conf
+2019/07/31 12:00:15 [error] 18376#10976: init_worker_by_lua error: ...ourcecode/github/RestyGateway//resty-gateway\gateway.lua:78: bad argument #1 to 'randomseed' (number expected, got no value)
+stack traceback:
+	[C]: in function 'randomseed'
+	...ourcecode/github/RestyGateway//resty-gateway\gateway.lua:78: in function 'init_worker'
+	init_worker_by_lua:3: in main chunk
+2019/07/31 12:00:15 [error] 20932#27108: [lua] gateway.lua:47: D:/Sourcecode/github/RestyGateway/conf/resty_gateway.conf
+2019/07/31 12:00:15 [error] 20932#26040: init_worker_by_lua error: ...ourcecode/github/RestyGateway//resty-gateway\gateway.lua:78: bad argument #1 to 'randomseed' (number expected, got no value)
+stack traceback:
+	[C]: in function 'randomseed'
+	...ourcecode/github/RestyGateway//resty-gateway\gateway.lua:78: in function 'init_worker'
+	init_worker_by_lua:3: in main chunk
+2019/07/31 12:00:16 [error] 26376#25020: [lua] gateway.lua:47: D:/Sourcecode/github/RestyGateway/conf/resty_gateway.conf
+2019/07/31 12:00:16 [error] 26376#9620: init_worker_by_lua error: ...ourcecode/github/RestyGateway//resty-gateway\gateway.lua:78: bad argument #1 to 'randomseed' (number expected, got no value)
+stack traceback:
+	[C]: in function 'randomseed'
+	...ourcecode/github/RestyGateway//resty-gateway\gateway.lua:78: in function 'init_worker'
+	init_worker_by_lua:3: in main chunk
+2019/07/31 12:00:16 [error] 27856#23492: [lua] gateway.lua:47: D:/Sourcecode/github/RestyGateway/conf/resty_gateway.conf
+2019/07/31 12:00:16 [error] 27856#10236: init_worker_by_lua error: ...ourcecode/github/RestyGateway//resty-gateway\gateway.lua:78: bad argument #1 to 'randomseed' (number expected, got no value)
+stack traceback:
+	[C]: in function 'randomseed'
+	...ourcecode/github/RestyGateway//resty-gateway\gateway.lua:78: in function 'init_worker'
+	init_worker_by_lua:3: in main chunk
+2019/08/02 11:16:40 [error] 15460#13304: [lua] snaker.lua:49: D:\Sourcecode\github\snaker/conf/snaker.conf
+2019/08/02 11:16:40 [error] 15460#13304: [lua] snaker.lua:58: init(): Startup error: D:\Sourcecode\github\snaker//snaker\snaker.lua:26: attempt to call local 'plugin_handler' (a boolean value)
+2019/08/02 11:21:29 [notice] 8628#18272: signal process started
+2019/08/02 11:21:29 [error] 8628#18272: OpenEvent("Global\ngx_stop_7404") failed (2: The system cannot find the file specified)
+2019/08/02 11:21:50 [error] 26432#8524: [lua] snaker.lua:49: D:\Sourcecode\github\snaker/conf/snaker.conf
+2019/08/02 11:21:50 [error] 26432#8524: [lua] snaker.lua:58: init(): Startup error: D:\Sourcecode\github\snaker//snaker\utils\utils.lua:192: ...cecode\github\snaker//snaker\plugins\rewrite\handler.lua:7: module 'snaker.utils.judge' not found:
+	no field package.preload['snaker.utils.judge']
+	no file 'D:\Sourcecode\github\snaker//lualib/snaker\utils\judge.lua'
+	no file 'D:\Sourcecode\github\snaker//lualib/resty/snaker\utils\judge.lua'
+	no file 'D:\Sourcecode\github\snaker//snaker\utils\judge.lua'
+	no file './site/lualib/snaker\utils\judge.ljbc'
+	no file './site/lualib/snaker\utils\judge/init.ljbc'
+	no file './lualib/snaker\utils\judge.ljbc'
+	no file './lualib/snaker\utils\judge/init.ljbc'
+	no file './site/lualib/snaker\utils\judge.lua'
+	no file './site/lualib/snaker\utils\judge/init.lua'
+	no file './lualib/snaker\utils\judge.lua'
+	no file './lualib/snaker\utils\judge/init.lua'
+	no file '.\snaker\utils\judge.lua'
+	no file 'D:\ProgramFiles\openresty-1.15.8.1-win64\lualib\snaker\utils\judge.lua'
+	no file 'D:\ProgramFiles\openresty-1.15.8.1-win64\lua\snaker\utils\judge.lua'
+	no file 'D:\ProgramFiles\openresty-1.15.8.1-win64\lua\snaker\utils\judge\init.lua'
+	no file './site/lualib/snaker\utils\judge.so'
+	no file './lualib/snaker\utils\judge.so'
+	no file '.\snaker\utils\judge.dll'
+	no file 'D:\ProgramFiles\openresty-1.15.8.1-win64\lualib\snaker\utils\judge.so'
+	no file 'D:\ProgramFiles\openresty-1.15.8.1-win64\snaker\utils\judge.dll'
+	no file 'D:\ProgramFiles\openresty-1.15.8.1-win64\loadall.dll'
+	no file './site/lualib/snaker.so'
+	no file './lualib/snaker.so'
+	no file '.\snaker.dll'
+	no file 'D:\ProgramFiles\openresty-1.15.8.1-win64\lualib\snaker.so'
+	no file 'D:\ProgramFiles\openresty-1.15.8.1-win64\snaker.dll'
+	no file 'D:\ProgramFiles\openresty-1.15.8.1-win64\loadall.dll'
+2019/08/02 11:29:26 [notice] 25964#31144: signal process started
+2019/08/02 11:29:26 [error] 25964#31144: OpenEvent("Global\ngx_stop_7404") failed (2: The system cannot find the file specified)
+2019/08/02 11:29:38 [error] 27056#32168: [lua] snaker.lua:49: D:\Sourcecode\github\snaker/conf/snaker.conf
+2019/08/02 11:29:38 [error] 4380#26832: [lua] snaker.lua:49: D:\Sourcecode\github\snaker/conf/snaker.conf
+2019/08/02 11:29:38 [error] 4380#27248: init_worker_by_lua error: init_worker_by_lua:3: attempt to index local 'snaker' (a nil value)
+stack traceback:
+	init_worker_by_lua:3: in main chunk
+2019/08/02 11:29:38 [error] 13656#20576: [lua] snaker.lua:49: D:\Sourcecode\github\snaker/conf/snaker.conf
+2019/08/02 11:29:38 [error] 13656#24352: init_worker_by_lua error: init_worker_by_lua:3: attempt to index local 'snaker' (a nil value)
+stack traceback:
+	init_worker_by_lua:3: in main chunk
+2019/08/02 11:29:38 [error] 21548#26104: [lua] snaker.lua:49: D:\Sourcecode\github\snaker/conf/snaker.conf
+2019/08/02 11:29:38 [error] 21548#25816: init_worker_by_lua error: init_worker_by_lua:3: attempt to index local 'snaker' (a nil value)
+stack traceback:
+	init_worker_by_lua:3: in main chunk
+2019/08/02 11:29:38 [error] 14288#26212: [lua] snaker.lua:49: D:\Sourcecode\github\snaker/conf/snaker.conf
+2019/08/02 11:29:38 [error] 14288#22224: init_worker_by_lua error: init_worker_by_lua:3: attempt to index local 'snaker' (a nil value)
+stack traceback:
+	init_worker_by_lua:3: in main chunk
+2019/08/02 11:31:31 [notice] 10064#31600: signal process started
+2019/08/02 11:31:33 [error] 1912#32060: [lua] snaker.lua:49: D:\Sourcecode\github\snaker/conf/snaker.conf
+2019/08/02 11:31:33 [error] 29736#28184: [lua] snaker.lua:49: D:\Sourcecode\github\snaker/conf/snaker.conf
+2019/08/02 11:31:33 [info] 29736#31020: *2 [lua] mysql_db.lua:32: query(): connected to mysql, reused_times:0 sql:select `key`, `value` from meta where `key`='rewrite.enable', context: ngx.timer
+2019/08/02 11:31:33 [error] 29736#31020: *2 [lua] mysql_db.lua:36: query(): bad result: Table 'resty_gateway.meta' doesn't exist: 1146: 42S02., context: ngx.timer
+2019/08/02 11:31:33 [info] 29736#31020: *2 [lua] mysql_db.lua:32: query(): connected to mysql, reused_times:1 sql:select * from rewrite where `type` = 'meta' limit 1, context: ngx.timer
+2019/08/02 11:31:33 [error] 29736#31020: *2 [lua] mysql_db.lua:36: query(): bad result: Table 'resty_gateway.rewrite' doesn't exist: 1146: 42S02., context: ngx.timer
+2019/08/02 11:31:33 [error] 29736#31020: *2 [lua] dao.lua:350: init_meta_of_plugin(): can not find meta from storage when initializing plugin[rewrite] local meta, context: ngx.timer
+2019/08/02 11:31:33 [info] 29736#31020: *2 [lua] mysql_db.lua:32: query(): connected to mysql, reused_times:2 sql:select * from rewrite where `type` = 'selector', context: ngx.timer
+2019/08/02 11:31:33 [error] 29736#31020: *2 [lua] mysql_db.lua:36: query(): bad result: Table 'resty_gateway.rewrite' doesn't exist: 1146: 42S02., context: ngx.timer
+2019/08/02 11:31:33 [error] 29736#31020: *2 [lua] dao.lua:385: init_selectors_of_plugin(): the size of selectors from storage is 0 when initializing plugin[rewrite] local selectors, context: ngx.timer
+2019/08/02 11:31:33 [info] 29736#31020: *2 [lua] dao.lua:520: load data of plugin[rewrite] success, context: ngx.timer
+2019/08/02 11:31:33 [error] 28748#26356: [lua] snaker.lua:49: D:\Sourcecode\github\snaker/conf/snaker.conf
+2019/08/02 11:31:33 [info] 28748#21696: *5 [lua] mysql_db.lua:32: query(): connected to mysql, reused_times:0 sql:select `key`, `value` from meta where `key`='rewrite.enable', context: ngx.timer
+2019/08/02 11:31:33 [error] 28748#21696: *5 [lua] mysql_db.lua:36: query(): bad result: Table 'resty_gateway.meta' doesn't exist: 1146: 42S02., context: ngx.timer
+2019/08/02 11:31:33 [info] 28748#21696: *5 [lua] mysql_db.lua:32: query(): connected to mysql, reused_times:1 sql:select * from rewrite where `type` = 'meta' limit 1, context: ngx.timer
+2019/08/02 11:31:33 [error] 28748#21696: *5 [lua] mysql_db.lua:36: query(): bad result: Table 'resty_gateway.rewrite' doesn't exist: 1146: 42S02., context: ngx.timer
+2019/08/02 11:31:33 [error] 28748#21696: *5 [lua] dao.lua:350: init_meta_of_plugin(): can not find meta from storage when initializing plugin[rewrite] local meta, context: ngx.timer
+2019/08/02 11:31:33 [info] 28748#21696: *5 [lua] mysql_db.lua:32: query(): connected to mysql, reused_times:2 sql:select * from rewrite where `type` = 'selector', context: ngx.timer
+2019/08/02 11:31:33 [error] 28748#21696: *5 [lua] mysql_db.lua:36: query(): bad result: Table 'resty_gateway.rewrite' doesn't exist: 1146: 42S02., context: ngx.timer
+2019/08/02 11:31:33 [error] 28748#21696: *5 [lua] dao.lua:385: init_selectors_of_plugin(): the size of selectors from storage is 0 when initializing plugin[rewrite] local selectors, context: ngx.timer
+2019/08/02 11:31:33 [info] 28748#21696: *5 [lua] dao.lua:520: load data of plugin[rewrite] success, context: ngx.timer
+2019/08/02 11:31:33 [error] 32348#27532: [lua] snaker.lua:49: D:\Sourcecode\github\snaker/conf/snaker.conf
+2019/08/02 11:31:33 [info] 32348#26256: *8 [lua] mysql_db.lua:32: query(): connected to mysql, reused_times:0 sql:select `key`, `value` from meta where `key`='rewrite.enable', context: ngx.timer
+2019/08/02 11:31:33 [error] 32348#26256: *8 [lua] mysql_db.lua:36: query(): bad result: Table 'resty_gateway.meta' doesn't exist: 1146: 42S02., context: ngx.timer
+2019/08/02 11:31:33 [info] 32348#26256: *8 [lua] mysql_db.lua:32: query(): connected to mysql, reused_times:1 sql:select * from rewrite where `type` = 'meta' limit 1, context: ngx.timer
+2019/08/02 11:31:33 [error] 32348#26256: *8 [lua] mysql_db.lua:36: query(): bad result: Table 'resty_gateway.rewrite' doesn't exist: 1146: 42S02., context: ngx.timer
+2019/08/02 11:31:33 [error] 32348#26256: *8 [lua] dao.lua:350: init_meta_of_plugin(): can not find meta from storage when initializing plugin[rewrite] local meta, context: ngx.timer
+2019/08/02 11:31:33 [info] 32348#26256: *8 [lua] mysql_db.lua:32: query(): connected to mysql, reused_times:2 sql:select * from rewrite where `type` = 'selector', context: ngx.timer
+2019/08/02 11:31:33 [error] 32348#26256: *8 [lua] mysql_db.lua:36: query(): bad result: Table 'resty_gateway.rewrite' doesn't exist: 1146: 42S02., context: ngx.timer
+2019/08/02 11:31:33 [error] 32348#26256: *8 [lua] dao.lua:385: init_selectors_of_plugin(): the size of selectors from storage is 0 when initializing plugin[rewrite] local selectors, context: ngx.timer
+2019/08/02 11:31:33 [info] 32348#26256: *8 [lua] dao.lua:520: load data of plugin[rewrite] success, context: ngx.timer
+2019/08/02 11:31:33 [error] 26124#14656: [lua] snaker.lua:49: D:\Sourcecode\github\snaker/conf/snaker.conf
+2019/08/02 11:31:33 [info] 26124#27904: *11 [lua] mysql_db.lua:32: query(): connected to mysql, reused_times:0 sql:select `key`, `value` from meta where `key`='rewrite.enable', context: ngx.timer
+2019/08/02 11:31:33 [error] 26124#27904: *11 [lua] mysql_db.lua:36: query(): bad result: Table 'resty_gateway.meta' doesn't exist: 1146: 42S02., context: ngx.timer
+2019/08/02 11:31:33 [info] 26124#27904: *11 [lua] mysql_db.lua:32: query(): connected to mysql, reused_times:1 sql:select * from rewrite where `type` = 'meta' limit 1, context: ngx.timer
+2019/08/02 11:31:33 [error] 26124#27904: *11 [lua] mysql_db.lua:36: query(): bad result: Table 'resty_gateway.rewrite' doesn't exist: 1146: 42S02., context: ngx.timer
+2019/08/02 11:31:33 [error] 26124#27904: *11 [lua] dao.lua:350: init_meta_of_plugin(): can not find meta from storage when initializing plugin[rewrite] local meta, context: ngx.timer
+2019/08/02 11:31:33 [info] 26124#27904: *11 [lua] mysql_db.lua:32: query(): connected to mysql, reused_times:2 sql:select * from rewrite where `type` = 'selector', context: ngx.timer
+2019/08/02 11:31:33 [error] 26124#27904: *11 [lua] mysql_db.lua:36: query(): bad result: Table 'resty_gateway.rewrite' doesn't exist: 1146: 42S02., context: ngx.timer
+2019/08/02 11:31:33 [error] 26124#27904: *11 [lua] dao.lua:385: init_selectors_of_plugin(): the size of selectors from storage is 0 when initializing plugin[rewrite] local selectors, context: ngx.timer
+2019/08/02 11:31:33 [info] 26124#27904: *11 [lua] dao.lua:520: load data of plugin[rewrite] success, context: ngx.timer
+2019/08/02 11:32:34 [notice] 30460#27576: signal process started
+2019/08/02 11:32:36 [error] 31856#15352: [lua] snaker.lua:49: D:\Sourcecode\github\snaker/conf/snaker.conf
+2019/08/02 11:32:36 [error] 8728#18992: [lua] snaker.lua:49: D:\Sourcecode\github\snaker/conf/snaker.conf
+2019/08/02 11:32:36 [info] 8728#30912: *2 [lua] mysql_db.lua:32: query(): connected to mysql, reused_times:0 sql:select `key`, `value` from meta where `key`='rewrite.enable', context: ngx.timer
+2019/08/02 11:32:36 [warn] 8728#30912: *2 [lua] mysql_store.lua:35: query(): MySQLStore:query empty, sql:select `key`, `value` from meta where `key`=?, context: ngx.timer
+2019/08/02 11:32:36 [info] 8728#30912: *2 [lua] mysql_db.lua:32: query(): connected to mysql, reused_times:1 sql:select * from rewrite where `type` = 'meta' limit 1, context: ngx.timer
+2019/08/02 11:32:36 [info] 8728#30912: *2 [lua] mysql_db.lua:32: query(): connected to mysql, reused_times:2 sql:select * from rewrite where `type` = 'selector', context: ngx.timer
+2019/08/02 11:32:36 [warn] 8728#30912: *2 [lua] mysql_store.lua:35: query(): MySQLStore:query empty, sql:select * from rewrite where `type` = ?, context: ngx.timer
+2019/08/02 11:32:36 [info] 8728#30912: *2 [lua] dao.lua:520: load data of plugin[rewrite] success, context: ngx.timer
+2019/08/02 11:32:36 [error] 13016#14364: [lua] snaker.lua:49: D:\Sourcecode\github\snaker/conf/snaker.conf
+2019/08/02 11:32:36 [info] 13016#28720: *5 [lua] mysql_db.lua:32: query(): connected to mysql, reused_times:0 sql:select `key`, `value` from meta where `key`='rewrite.enable', context: ngx.timer
+2019/08/02 11:32:36 [warn] 13016#28720: *5 [lua] mysql_store.lua:35: query(): MySQLStore:query empty, sql:select `key`, `value` from meta where `key`=?, context: ngx.timer
+2019/08/02 11:32:36 [info] 13016#28720: *5 [lua] mysql_db.lua:32: query(): connected to mysql, reused_times:1 sql:select * from rewrite where `type` = 'meta' limit 1, context: ngx.timer
+2019/08/02 11:32:36 [info] 13016#28720: *5 [lua] mysql_db.lua:32: query(): connected to mysql, reused_times:2 sql:select * from rewrite where `type` = 'selector', context: ngx.timer
+2019/08/02 11:32:36 [warn] 13016#28720: *5 [lua] mysql_store.lua:35: query(): MySQLStore:query empty, sql:select * from rewrite where `type` = ?, context: ngx.timer
+2019/08/02 11:32:36 [info] 13016#28720: *5 [lua] dao.lua:520: load data of plugin[rewrite] success, context: ngx.timer
+2019/08/02 11:32:36 [error] 27724#1216: [lua] snaker.lua:49: D:\Sourcecode\github\snaker/conf/snaker.conf
+2019/08/02 11:32:36 [info] 27724#25188: *8 [lua] mysql_db.lua:32: query(): connected to mysql, reused_times:0 sql:select `key`, `value` from meta where `key`='rewrite.enable', context: ngx.timer
+2019/08/02 11:32:36 [warn] 27724#25188: *8 [lua] mysql_store.lua:35: query(): MySQLStore:query empty, sql:select `key`, `value` from meta where `key`=?, context: ngx.timer
+2019/08/02 11:32:36 [info] 27724#25188: *8 [lua] mysql_db.lua:32: query(): connected to mysql, reused_times:1 sql:select * from rewrite where `type` = 'meta' limit 1, context: ngx.timer
+2019/08/02 11:32:36 [info] 27724#25188: *8 [lua] mysql_db.lua:32: query(): connected to mysql, reused_times:2 sql:select * from rewrite where `type` = 'selector', context: ngx.timer
+2019/08/02 11:32:36 [warn] 27724#25188: *8 [lua] mysql_store.lua:35: query(): MySQLStore:query empty, sql:select * from rewrite where `type` = ?, context: ngx.timer
+2019/08/02 11:32:36 [info] 27724#25188: *8 [lua] dao.lua:520: load data of plugin[rewrite] success, context: ngx.timer
+2019/08/02 11:32:36 [error] 17924#1132: [lua] snaker.lua:49: D:\Sourcecode\github\snaker/conf/snaker.conf
+2019/08/02 11:32:37 [info] 17924#18084: *11 [lua] mysql_db.lua:32: query(): connected to mysql, reused_times:0 sql:select `key`, `value` from meta where `key`='rewrite.enable', context: ngx.timer
+2019/08/02 11:32:37 [warn] 17924#18084: *11 [lua] mysql_store.lua:35: query(): MySQLStore:query empty, sql:select `key`, `value` from meta where `key`=?, context: ngx.timer
+2019/08/02 11:32:37 [info] 17924#18084: *11 [lua] mysql_db.lua:32: query(): connected to mysql, reused_times:1 sql:select * from rewrite where `type` = 'meta' limit 1, context: ngx.timer
+2019/08/02 11:32:37 [info] 17924#18084: *11 [lua] mysql_db.lua:32: query(): connected to mysql, reused_times:2 sql:select * from rewrite where `type` = 'selector', context: ngx.timer
+2019/08/02 11:32:37 [warn] 17924#18084: *11 [lua] mysql_store.lua:35: query(): MySQLStore:query empty, sql:select * from rewrite where `type` = ?, context: ngx.timer
+2019/08/02 11:32:37 [info] 17924#18084: *11 [lua] dao.lua:520: load data of plugin[rewrite] success, context: ngx.timer
+2019/08/02 11:34:07 [notice] 14680#22976: signal process started
+2019/08/02 11:34:08 [info] 25816#32168: *2 [lua] mysql_db.lua:32: query(): connected to mysql, reused_times:0 sql:select `key`, `value` from meta where `key`='rewrite.enable', context: ngx.timer
+2019/08/02 11:34:08 [warn] 25816#32168: *2 [lua] mysql_store.lua:35: query(): MySQLStore:query empty, sql:select `key`, `value` from meta where `key`=?, context: ngx.timer
+2019/08/02 11:34:08 [info] 25816#32168: *2 [lua] mysql_db.lua:32: query(): connected to mysql, reused_times:1 sql:select * from rewrite where `type` = 'meta' limit 1, context: ngx.timer
+2019/08/02 11:34:08 [info] 25816#32168: *2 [lua] mysql_db.lua:32: query(): connected to mysql, reused_times:2 sql:select * from rewrite where `type` = 'selector', context: ngx.timer
+2019/08/02 11:34:08 [warn] 25816#32168: *2 [lua] mysql_store.lua:35: query(): MySQLStore:query empty, sql:select * from rewrite where `type` = ?, context: ngx.timer
+2019/08/02 11:34:08 [info] 25816#32168: *2 [lua] dao.lua:520: load data of plugin[rewrite] success, context: ngx.timer
+2019/08/02 11:34:41 [error] 25816#32168: *4 invalid URL prefix in "", client: 127.0.0.1, server: , request: "GET / HTTP/1.1", host: "127.0.0.1"
+2019/08/02 11:34:41 [error] 25816#32168: *4 failed to run header_filter_by_lua*: header_filter_by_lua:3: attempt to call field 'header_filter' (a nil value)
+stack traceback:
+	header_filter_by_lua:3: in main chunk, client: 127.0.0.1, server: , request: "GET / HTTP/1.1", host: "127.0.0.1"
