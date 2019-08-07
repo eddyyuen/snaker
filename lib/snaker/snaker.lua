@@ -7,7 +7,10 @@ local config_loader = require("snaker.utils.config_loader")
 local utils = require("snaker.utils.utils")
 local dao = require("snaker.store.dao")
 
-
+local HEADERS = {
+    PROXY_LATENCY = "X-Orange-Proxy-Latency",
+    UPSTREAM_LATENCY = "X-Orange-Upstream-Latency",
+}
 local loaded_plugins = {}
 local function load_node_plugins(config, store)
     ngx.log(ngx.DEBUG, "Discovering used plugins")
@@ -37,7 +40,12 @@ local function load_node_plugins(config, store)
     return sorted_plugins
 end
 
-local RestyGateway = {}
+-- ms
+local function now()
+    return ngx.now() * 1000
+end
+
+local Snaker = {}
 
 local function init(options)
     options = options or {}
@@ -60,7 +68,7 @@ local function init(options)
 
     -- local consul = require("orange.plugins.consul_balancer.consul_balancer")
     -- consul.set_shared_dict_name("consul_upstream", "consul_upstream_watch")
-    RestyGateway.data = {
+    Snaker.data = {
         store = store,
         config = config,
         -- consul = consul
@@ -79,11 +87,12 @@ local function init_worker()
     -- math.randomseed()
 
     -- 初始化定时器，清理计数器等
-    if RestyGateway.data and RestyGateway.data.store and RestyGateway.data.config.store == "mysql" then
+    if Snaker.data and Snaker.data.store and Snaker.data.config.store == "mysql" then
         local ok, err = ngx.timer.at(0, function(premature, store, config)
             local available_plugins = config.plugins
             for _, v in ipairs(available_plugins) do
                 local load_success = dao.load_data_by_mysql(store, v)
+                ngx.log(ngx.INFO, "init_worker")
                 if not load_success then
                     os.exit(1)
                 end
@@ -96,7 +105,7 @@ local function init_worker()
                     end
                 end ]]
             end
-        end, RestyGateway.data.store, RestyGateway.data.config)
+        end, Snaker.data.store, Snaker.data.config)
 
         if not ok then
             ngx.log(ngx.ERR, "failed to create the timer: ", err)
@@ -111,38 +120,105 @@ end
 
 
 local function init_cookies()
+    ngx.ctx.__cookies__ = nil
+
+    local COOKIE, err = ck:new()
+    if not err and COOKIE then
+        ngx.ctx.__cookies__ = COOKIE
+    end
 end
 
 local function redirect()
+    ngx.ctx.ORANGE_REDIRECT_START = now()
+
+    for _, plugin in ipairs(loaded_plugins) do
+        plugin.handler:redirect()
+    end
+
+    local now_time = now()
+    ngx.ctx.ORANGE_REDIRECT_TIME = now_time - ngx.ctx.ORANGE_REDIRECT_START
+    ngx.ctx.ORANGE_REDIRECT_ENDED_AT = now_time
 end
 
 local function rewrite()
+    ngx.ctx.ORANGE_REWRITE_START = now()
+
+    for _, plugin in ipairs(loaded_plugins) do
+        plugin.handler:rewrite()
+    end
+
+    local now_time = now()
+    ngx.ctx.ORANGE_REWRITE_TIME = now_time - ngx.ctx.ORANGE_REWRITE_START
+    ngx.ctx.ORANGE_REWRITE_ENDED_AT = now_time
 end
 
 local function access()
+    ngx.ctx.ORANGE_ACCESS_START = now()
+
+    for _, plugin in ipairs(loaded_plugins) do
+        plugin.handler:access()
+    end
+
+    local now_time = now()
+    ngx.ctx.ORANGE_ACCESS_TIME = now_time - ngx.ctx.ORANGE_ACCESS_START
+    ngx.ctx.ORANGE_ACCESS_ENDED_AT = now_time
+    ngx.ctx.ORANGE_PROXY_LATENCY = now_time - ngx.req.start_time() * 1000
+    ngx.ctx.ACCESSED = true
+
+   
 end
 
 local function balancer()
+    for _, plugin in ipairs(loaded_plugins) do
+        plugin.handler:balancer()
+    end
 end
 
 local function header_filter()
+    if ngx.ctx.ACCESSED then
+        local now_time = now()
+        ngx.ctx.ORANGE_WAITING_TIME = now_time - ngx.ctx.ORANGE_ACCESS_ENDED_AT -- time spent waiting for a response from upstream
+        ngx.ctx.ORANGE_HEADER_FILTER_STARTED_AT = now_time
+    end
+
+    for _, plugin in ipairs(loaded_plugins) do
+        plugin.handler:header_filter()
+    end
+
+    if ngx.ctx.ACCESSED then
+        ngx.header[HEADERS.UPSTREAM_LATENCY] = ngx.ctx.ORANGE_WAITING_TIME
+        ngx.header[HEADERS.PROXY_LATENCY] = ngx.ctx.ORANGE_PROXY_LATENCY
+    end
 end
 
 local function body_filter()
+    for _, plugin in ipairs(loaded_plugins) do
+        plugin.handler:body_filter()
+    end
+
+    if ngx.ctx.ACCESSED then
+        if ngx.ctx.ORANGE_HEADER_FILTER_STARTED_AT == nil then
+            ngx.ctx.ORANGE_HEADER_FILTER_STARTED_AT = 0
+        end
+        ngx.ctx.ORANGE_RECEIVE_TIME = now() - ngx.ctx.ORANGE_HEADER_FILTER_STARTED_AT
+    end
 end
 
 local function log()
+    for _, plugin in ipairs(loaded_plugins) do
+        plugin.handler:log()
+    end
 end
 
-RestyGateway.init = init
-RestyGateway.init_worker = init_worker
-RestyGateway.ininit_cookiesit = init_cookies
-RestyGateway.redirect = redirect
-RestyGateway.rewrite = rewrite
-RestyGateway.access = access
-RestyGateway.balancer = balancer
-RestyGateway.inheader_filterit = header_filter
-RestyGateway.body_filter = body_filter
-RestyGateway.log = log
+Snaker.init = init
+Snaker.init_worker = init_worker
+Snaker.ininit_cookiesit = init_cookies
+Snaker.redirect = redirect
+Snaker.rewrite = rewrite
+Snaker.access = access
+Snaker.balancer = balancer
+Snaker.header_filter = header_filter
+Snaker.body_filter = body_filter
+Snaker.log = log
 
-return RestyGateway
+return Snaker

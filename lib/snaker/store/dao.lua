@@ -4,7 +4,7 @@ local table_concat = table.concat
 local type = type
 local xpcall = xpcall
 local json = require("snaker.utils.json")
-local orange_db = require("snaker.store.snaker_db")
+local snaker_db = require("snaker.store.snaker_db_lrucache")
 
 
 local _M = {
@@ -52,11 +52,13 @@ function _M.get_rules_of_selector(plugin, store, rule_ids)
     end
 
     if rules and type(rules) == "table" and #rules > 0 then
+        ngx.log(ngx.INFO, plugin .. " get_rules_of_selector:",to_get_rules_ids," count:", #rules)
         local format_rules = {}
 
         -- reorder the rules as the order stored in selector
         for _, rule_id in ipairs(rule_ids) do
             for _, r in ipairs(rules) do
+                
                 local tmp = json.decode(r.value)
                 if tmp and tmp.id == rule_id then
                     table_insert(format_rules, tmp)
@@ -176,7 +178,11 @@ function _M.update_local_meta(plugin, store)
     end
 
     if meta and type(meta) == "table" and #meta > 0 then
-        local success, err, forcible = orange_db.set(plugin .. ".meta", meta[1].value or '{}')
+        -- local success, err, forcible = snaker_db.set(plugin .. ".meta", meta[1].value or '{}')
+        -- 存储成为table eddyruan 20190807
+        local meta_value = json.decode(meta[1].value or '{}')
+        local success, err, forcible = snaker_db.set(plugin .. ".meta", meta_value)
+
         if err or not success then
             ngx.log(ngx.ERR, "update local plugin's meta error, err:", err)
             return false
@@ -205,14 +211,17 @@ function _M.update_local_selectors(plugin, store)
             to_update_selectors[s.key] = json.decode(s.value or "{}")
         end
 
-        local success, err, forcible = orange_db.set_json(plugin .. ".selectors", to_update_selectors)
+        -- local success, err, forcible = snaker_db.set_json(plugin .. ".selectors", to_update_selectors)
+        local success, err, forcible = snaker_db.set(plugin .. ".selectors", to_update_selectors)
+
         if err or not success then
             ngx.log(ngx.ERR, "update local plugin's selectors error, err:", err)
             return false
         end
     else
         ngx.log(ngx.ERR, "the size of selectors from storage is 0 when updating local selectors")
-        local success, err, forcible = orange_db.set_json(plugin .. ".selectors", {})
+        -- local success, err, forcible = snaker_db.set_json(plugin .. ".selectors", {})
+        local success, err, forcible = snaker_db.set(plugin .. ".selectors", {})
         if err or not success then
             ngx.log(ngx.ERR, "update local plugin's selectors error, err:", err)
             return false
@@ -238,7 +247,8 @@ function _M.update_local_selector_rules(plugin, store, selector_id)
     local rules_ids = selector.rules or {}
     local rules = _M.get_rules_of_selector(plugin, store, rules_ids)
 
-    local success, err, forcible = orange_db.set_json(plugin .. ".selector." .. selector_id .. ".rules", rules)
+    -- local success, err, forcible = snaker_db.set_json(plugin .. ".selector." .. selector_id .. ".rules", rules)    
+    local success, err, forcible = snaker_db.set(plugin .. ".selector." .. selector_id .. ".rules", rules)
     if err or not success then
         ngx.log(ngx.ERR, "update local rules of selector error, err:", err)
         return false
@@ -300,10 +310,13 @@ function _M.init_rules_of_selector(plugin, store, selector_id)
     local rules_ids = selector.rules or {}
     local rules = _M.get_rules_of_selector(plugin, store, rules_ids)
 
-    local success, err, forcible = orange_db.set_json(plugin .. ".selector." .. selector_id .. ".rules", rules)
+    -- local success, err, forcible = snaker_db.set_json(plugin .. ".selector." .. selector_id .. ".rules", rules)
+    local success, err, forcible = snaker_db.set(plugin .. ".selector." .. selector_id .. ".rules", rules)
     if err or not success then
         ngx.log(ngx.ERR, "init plugin[" .. plugin .. "] local rules of selector error, err:", err)
         return false
+    else
+        ngx.log(ngx.INFO, "init plugin[" .. plugin .. "] local rules sount:", #rules)
     end
     return true
 end
@@ -321,9 +334,9 @@ function _M.init_enable_of_plugin(plugin, store)
     end
 
     if enables and type(enables) == "table" and #enables > 0 then
-        orange_db.set(plugin .. ".enable", enables[1].value == "1")
+        snaker_db.set(plugin .. ".enable", enables[1].value == "1")
     else
-        orange_db.set(plugin .. ".enable", false)
+        snaker_db.set(plugin .. ".enable", false)
     end
 
     return true
@@ -341,7 +354,11 @@ function _M.init_meta_of_plugin(plugin, store)
     end
 
     if meta and type(meta) == "table" and #meta > 0 then
-        local success, err, forcible = orange_db.set(plugin .. ".meta", meta[1].value or '{}')
+        -- local success, err, forcible = snaker_db.set(plugin .. ".meta", meta[1].value or '{}')
+          -- 存储成为table eddyruan 20190807
+        local meta_value = json.decode(meta[1].value or '{}')
+        local success, err, forcible = snaker_db.set(plugin .. ".meta", meta_value)
+
         if err or not success then
             ngx.log(ngx.ERR, "init local plugin[" .. plugin .. "] meta error, err:", err)
             return false
@@ -376,14 +393,17 @@ function _M.init_selectors_of_plugin(plugin, store)
             end
         end
 
-        local success, err, forcible = orange_db.set_json(plugin .. ".selectors", to_update_selectors)
+        -- local success, err, forcible = snaker_db.set_json(plugin .. ".selectors", to_update_selectors)
+        local success, err, forcible = snaker_db.set(plugin .. ".selectors", to_update_selectors)
         if err or not success then
             ngx.log(ngx.ERR, "init local plugin[" .. plugin .. "] selectors error, err:", err)
             return false
         end
     else
         ngx.log(ngx.ERR, "the size of selectors from storage is 0 when initializing plugin[" .. plugin .. "] local selectors")
-        local success, err, forcible = orange_db.set_json(plugin .. ".selectors", {})
+        -- local success, err, forcible = snaker_db.set_json(plugin .. ".selectors", {})
+        local success, err, forcible = snaker_db.set(plugin .. ".selectors", {})
+
         if err or not success then
             ngx.log(ngx.ERR, "init local plugin[" .. plugin .. "] selectors error, err:", err)
             return false

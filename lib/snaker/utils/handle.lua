@@ -8,11 +8,12 @@ template.print = function(s)
 end
 
 local function compose(extractor_type, tmpl, variables)
+    ngx.log(ngx.INFO, "[Rewrite] tmpl", tmpl)
     if not tmpl then return "" end
     if not variables or type(variables) ~= "table" then
         return tmpl
     end
-
+    ngx.log(ngx.INFO, "[Rewrite] tmpl 2 ", tmpl)
     if not extractor_type or extractor_type == 1 then
         -- replace with ngx.re.gsub
         local result = string_gsub(tmpl, "%${([0-9]+)}", function(m)
@@ -25,6 +26,7 @@ local function compose(extractor_type, tmpl, variables)
 
         return result
     elseif extractor_type == 2 then
+        ngx.log(ngx.INFO, "[Rewrite] extractor_type 2 ", extractor_type)
         return template.render(tmpl, variables, ngx_md5(tmpl), true)
     end
 end
