@@ -472,6 +472,7 @@ end
 
 function template.render(view, context, key, plain)
     assert(view, "view was not provided for template.render(view, context, key, plain).")
+    -- ngx.log(ngx.ERR,view)
     return template.print(template.compile(view, key, plain)(context))
 end
 

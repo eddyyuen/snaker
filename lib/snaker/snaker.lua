@@ -66,12 +66,12 @@ local function init(options)
         os.exit(1)
     end
 
-    -- local consul = require("orange.plugins.consul_balancer.consul_balancer")
-    -- consul.set_shared_dict_name("consul_upstream", "consul_upstream_watch")
+    local consul = require("snaker.plugins.consul_balancer.consul_balancer")
+    consul.set_shared_dict_name("consul_upstream", "consul_upstream_watch")
     Snaker.data = {
         store = store,
         config = config,
-        -- consul = consul
+        consul = consul
     }
 
     -- init dns_client
@@ -84,7 +84,7 @@ end
 
 local function init_worker()
     -- 仅在 init_worker 阶段调用，初始化随机因子，仅允许调用一次
-    -- math.randomseed()
+    --  math.randomseed()
 
     -- 初始化定时器，清理计数器等
     if Snaker.data and Snaker.data.store and Snaker.data.config.store == "mysql" then
@@ -92,18 +92,17 @@ local function init_worker()
             local available_plugins = config.plugins
             for _, v in ipairs(available_plugins) do
                 local load_success = dao.load_data_by_mysql(store, v)
-                ngx.log(ngx.INFO, "init_worker")
                 if not load_success then
                     os.exit(1)
                 end
                 
-             --[[    if v == "consul_balancer" then
+                if v == "consul_balancer" then
                     for ii,p in ipairs(loaded_plugins) do
                         if v == p.name then
                             p.handler.db_ready()
                         end
                     end
-                end ]]
+                end
             end
         end, Snaker.data.store, Snaker.data.config)
 
@@ -209,6 +208,7 @@ local function log()
         plugin.handler:log()
     end
 end
+
 
 Snaker.init = init
 Snaker.init_worker = init_worker
