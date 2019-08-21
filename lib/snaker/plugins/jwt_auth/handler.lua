@@ -83,15 +83,20 @@ local function filter_rules(sid, plugin, ngx_var_uri, headers, query)
                     if authorized then
                         return true
                     else
+                        ngx.header['Content-Type'] = "application/json"
+                        ngx.say(cjson.encode({returnCode=2,token=false}))
                         ngx.exit(tonumber(handle.code) or 401)
+                        ngx.ctx.SNAKER_CANCEL = true
                         return true
                     end
                 else
                     if handle.log == true then
                         ngx.log(ngx.INFO, "[JwtAuth-Forbidden-Rule] ", rule.name, " uri:", ngx_var_uri)
                     end
+                    ngx.header['Content-Type'] = "application/json"
+                    ngx.say(cjson.encode({returnCode=2,token=false}))
                     ngx.exit(tonumber(handle.code) or 401)
-
+                    ngx.ctx.SNAKER_CANCEL = true
                     return true
                 end
             end
@@ -100,6 +105,7 @@ local function filter_rules(sid, plugin, ngx_var_uri, headers, query)
 
     return false
 end
+ 
 
 
 local JwtAuthHandler = BasePlugin:extend()
@@ -149,18 +155,19 @@ function JwtAuthHandler:access(conf)
                 if stop then -- 不再执行此插件其他逻辑
                     return
                 end
+                -- if continue or break the loop
+                if selector.handle and selector.handle.continue == true then
+                    -- continue next selector
+                else
+                    break
+                end
             else
                 if selector.handle and selector.handle.log == true then
                     ngx.log(ngx.INFO, "[JwtAuth][NOT-PASS-SELECTOR:", sid, "] ", ngx_var_uri)
                 end
             end
 
-            -- if continue or break the loop
-            if selector.handle and selector.handle.continue == true then
-                -- continue next selector
-            else
-                break
-            end
+          
         end
     end
     

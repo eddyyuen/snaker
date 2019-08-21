@@ -10,11 +10,12 @@ local dao = require("snaker.store.dao")
 -- local consul_kv = require("snaker.store.consul_kv")
 -- local consul = require("snaker.plugins.consul_balancer.consul_balancer")
 local snaker = require("snaker.snaker")
+local events = require ("resty.worker.events")
 
 -- build common apis
 return function(plugin)
     local API = {}
-
+    -- local worker_id = ngx.worker.pid()
     API["/" .. plugin .. "/enable"] = {
         POST = function(store)
             return function(req, res, next)
@@ -175,6 +176,13 @@ return function(plugin)
                         })
                     end
 
+                    -- register worker events eddy/20190819
+                    local worker_id = ngx.worker.pid()
+                    local success, err = events.post(worker_id, "update_local_selectors", plugin,nil)
+                    if err then
+                        ngx.log(ngx.ERR,"POST events error"..err)
+                    end
+
                     -- update local selectors
                     local update_local_selectors_result = dao.update_local_selectors(plugin, store)
                     if not update_local_selectors_result then
@@ -182,6 +190,12 @@ return function(plugin)
                             success = false,
                             msg = "error to update local selectors when creating rule"
                         })
+                    end
+
+                    -- register worker events eddy/20190819
+                    local success, err = events.post(worker_id, "update_local_selector_rules", plugin..","..selector_id,nil)
+                    if err then
+                        ngx.log(ngx.ERR,"POST events error"..err)
                     end
 
                     local update_local_selector_rules_result = dao.update_local_selector_rules(plugin, store, selector_id)
@@ -313,6 +327,14 @@ return function(plugin)
                         })
                     end
 
+                    -- register worker events eddy/20190819
+                    local worker_id = ngx.worker.pid()
+                    local success, err = events.post(worker_id, "update_local_selectors", plugin,nil)
+                    if err then
+                        ngx.log(ngx.ERR,"POST events error"..err)
+                    end
+
+                    
                     -- update local selectors
                     local update_local_selectors_result = dao.update_local_selectors(plugin, store)
                     if not update_local_selectors_result then
@@ -322,7 +344,12 @@ return function(plugin)
                         })
                     end
 
-                    -- update local rules of selector
+                    -- register worker events eddy/20190819
+                    local success, err = events.post(worker_id, "update_local_selector_rules", plugin..","..selector_id,nil)
+                    if err then
+                        ngx.log(ngx.ERR,"POST events error"..err)
+                    end
+                                        -- update local rules of selector
                     local update_local_selector_rules_result = dao.update_local_selector_rules(plugin, store, selector_id)
                     if not update_local_selector_rules_result then
                         return res:json({
@@ -380,11 +407,24 @@ return function(plugin)
                     new_selector.rules = rules
                     update_selector_result = dao.update_selector(plugin, store, new_selector)
                     if update_selector_result then
+                        -- register worker events eddy/20190819
+                        local worker_id = ngx.worker.pid()
+                        local success, err = events.post(worker_id, "update_local_selectors", plugin,nil)
+                        if err then
+                            ngx.log(ngx.ERR,"POST events error"..err)
+                        end
                         update_local_selectors_result = dao.update_local_selectors(plugin, store)
                     end
                 end
 
                 if update_selector_result and update_local_selectors_result then
+                    -- register worker events eddy/20190819
+                    local worker_id = ngx.worker.pid()
+                    local success, err = events.post(worker_id, "update_local_selector_rules", plugin..","..selector_id,nil)
+                    if err then
+                        ngx.log(ngx.ERR,"POST events error"..err)
+                    end
+
                     update_local_selector_rules_result = dao.update_local_selector_rules(plugin, store, selector_id)
                     if update_local_selector_rules_result then
                         return res:json({
@@ -495,6 +535,18 @@ return function(plugin)
                     })
                 end
 
+                -- register worker events eddy/20190819
+                local worker_id = ngx.worker.pid()
+                local success, err = events.post(worker_id, "update_local_meta", plugin,nil)
+                if err then
+                    ngx.log(ngx.ERR,"POST events error"..err)
+                end
+                -- register worker events eddy/20190819
+                local success, err = events.post(worker_id, "update_local_selectors", plugin,nil)
+                if err then
+                    ngx.log(ngx.ERR,"POST events error"..err)
+                end
+
                 -- update local meta & selectors
                 local update_local_meta_result = dao.update_local_meta(plugin, store)
                 local update_local_selectors_result = dao.update_local_selectors(plugin, store)
@@ -553,6 +605,18 @@ return function(plugin)
                         })
                     end ]]
                     
+                    -- register worker events eddy/20190819
+                    local worker_id = ngx.worker.pid()
+                    local success, err = events.post(worker_id, "update_local_meta", plugin,nil)
+                    if err then
+                        ngx.log(ngx.ERR,"POST events error"..err)
+                    end
+                    -- register worker events eddy/20190819
+                    local success, err = events.post(worker_id, "update_local_selectors", plugin,nil)
+                    if err then
+                        ngx.log(ngx.ERR,"POST events error"..err)
+                    end
+
                     local update_local_meta_result = dao.update_local_meta(plugin, store)
                     local update_local_selectors_result = dao.update_local_selectors(plugin, store)
                     if update_local_meta_result and update_local_selectors_result then
@@ -615,6 +679,13 @@ return function(plugin)
                             tag = nil
                         })
                     end ]]
+
+                    -- register worker events eddy/20190819
+                    local worker_id = ngx.worker.pid()
+                    local success, err = events.post(tostring(worker_id), "update_local_selectors", plugin,nil)
+                    if err then
+                        ngx.log(ngx.ERR,"POST events error"..err.."worker_id:"..worker_id)
+                    end
 
                     local update_local_selectors_result = dao.update_local_selectors(plugin, store)
                     if not update_local_selectors_result then

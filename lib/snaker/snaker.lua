@@ -6,6 +6,9 @@ local require = require
 local config_loader = require("snaker.utils.config_loader")
 local utils = require("snaker.utils.utils")
 local dao = require("snaker.store.dao")
+local ev = require ("resty.worker.events")
+local stringy = require("snaker.utils.stringy")
+
 
 local HEADERS = {
     PROXY_LATENCY = "X-Orange-Proxy-Latency",
@@ -86,6 +89,8 @@ local function init_worker()
     -- 仅在 init_worker 阶段调用，初始化随机因子，仅允许调用一次
     --  math.randomseed()
 
+    
+
     -- 初始化定时器，清理计数器等
     if Snaker.data and Snaker.data.store and Snaker.data.config.store == "mysql" then
         local ok, err = ngx.timer.at(0, function(premature, store, config)
@@ -114,6 +119,42 @@ local function init_worker()
 
     for _, plugin in ipairs(loaded_plugins) do
     plugin.handler:init_worker()
+    end
+
+    -- 注册事件回调，更新本地LRUCACHE缓存
+    
+    local handler = function(data, event, source, pid)
+        local worker_id = tostring(ngx.worker.pid())
+        ngx.log(ngx.ERR,"worker_id:"..worker_id.."source:"..source..",event:"..event..",pid:"..pid)
+        if source ~= worker_id then
+            if event =="update_local_meta" then
+                dao.update_local_meta(data, Snaker.data.store)
+            end
+            if event =="update_local_selectors" then
+                dao.update_local_selectors(data, Snaker.data.store)
+            end
+            if event =="update_local_selector_rules" then
+                local tmp = stringy.split(data, ",")
+                dao.update_local_selector_rules(tmp[1], Snaker.data.store,tmp[2])
+            end
+        end
+        
+    end
+
+    ev.register(handler)
+
+    local ok, err = ev.configure {
+        shm = "process_events", -- defined by "lua_shared_dict"
+        timeout = 2,            -- life time of unique event data in shm
+        interval = 1,           -- poll interval (seconds)
+
+        wait_interval = 0.010,  -- wait before retry fetching event data
+        wait_max = 0.5,         -- max wait time before discarding event
+        shm_retries = 5,        -- retries for shm fragmentation (no memory)
+    }
+    if not ok then
+        ngx.log(ngx.ERR, "failed to start event system: ", err)
+        return
     end
 end
 
@@ -155,9 +196,16 @@ local function access()
     ngx.ctx.ORANGE_ACCESS_START = now()
 
     for _, plugin in ipairs(loaded_plugins) do
-        plugin.handler:access()
+        if not ngx.ctx.SNAKER_CANCEL or ngx.ctx.SNAKER_CANCEL == false then
+            plugin.handler:access()
+        end
     end
-
+    if ngx.var.upstream_scheme == '' then
+        ngx.var.upstream_scheme = "http://"
+    end
+    if ngx.var.upstream_url == '' then
+        ngx.var.upstream_url = "default_upstream"
+    end
     local now_time = now()
     ngx.ctx.ORANGE_ACCESS_TIME = now_time - ngx.ctx.ORANGE_ACCESS_START
     ngx.ctx.ORANGE_ACCESS_ENDED_AT = now_time

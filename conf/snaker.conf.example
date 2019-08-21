@@ -8,6 +8,7 @@
         "rewrite",
         "property_rate_limiting",
         "stat",
+        "divide",
         "consul_balancer",
         "persist",
         "monitor"
@@ -16,9 +17,9 @@
     "store_mysql": {
         "timeout": 5000,
         "connect_config": {
-            "host": "192.168.10.79",
-            "port": 3307,
-            "database": "snaker",
+            "host": "172.18.212.43",
+            "port": 3306,
+            "database": "an1_apigateway",
             "user": "root",
             "password": "An1#24",
             "charset": "utf8mb4",
@@ -41,7 +42,7 @@
         }
     },
     "consul":{
-        "host" : "192.168.10.79",
+        "host" : "172.18.212.43",
         "port" : 8500,
         "interval" : 10,
         "token" : ""

@@ -23,6 +23,8 @@ local api_router = {
     put={},
     delete={}
 }
+
+
 local function urlDecode(s)  
     s = string.gsub(s, '%%(%x%x)', function(h) return string.char(tonumber(h, 16)) end)  
     return s  
@@ -98,7 +100,6 @@ local function init()
        load_plugin_api(p, api_router, store)
    end
    r:match("GET","/",function(params)
---    api_router["GET"]["/"] = function(req, res)
         local data = {}
         local plugins =  context.config.plugins
         data.plugins = plugins
@@ -203,8 +204,8 @@ local function init()
     end)
 
     r:match("GET","/monitor/rule/statistic",function(params)
-        local rule_id = req.query.rule_id;
-        local rule_name = req.query.rule_name or "";
+        local rule_id = params.request_query.rule_id;
+        local rule_name = params.request_query.rule_name or "";
         res:html(template.render("monitor-rule-stat.html", {
             rule_id = rule_id,
             rule_name = rule_name
@@ -227,7 +228,38 @@ local function init()
         res:html(template.render("consul_balancer.html"))
     end)
     
-   
+    r:match("GET","/persist",function(params)
+        res:html(template.render("persist-stat.html",{
+            id =  params.request_query.id,
+            ip =  params.request_query.ip
+        }))
+    end)
+
+
+    r:match("GET","/persist/statistic",function(params)
+        local config = context.config
+        local persist_model = require("dashboard.model.persist")(config)
+        local node_ip = params.request_query.ip or ''
+        local limit = tonumber(params.request_query.minutes) or 720
+        local group_by_day = false
+        local data = {}
+        -- 大于 2 天，统计粒度 按天计算
+        if limit > (24 * 60 * 2) then
+            group_by_day = true
+            limit = limit / (24 * 60)
+        end
+
+        if node_ip == '' then
+            data = persist_model:get_stat(limit, group_by_day)
+        else
+            data = persist_model:get_stat_by_ip(node_ip, limit, group_by_day)
+        end
+
+        res:json({
+            success = true,
+            data = data
+        })
+    end)
 
     
 end
@@ -237,7 +269,7 @@ local function run ()
     local request_args 
     local  body ={}
     local headers = ngx.req.get_headers()
-    if "POST" == request_method or   "PUT" == request_method then
+    if "GET" ~= request_method then
         ngx.req.read_body()
         request_args = ngx.req.get_post_args()
         local request_body = ngx.req.get_body_data()

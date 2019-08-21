@@ -80,12 +80,12 @@ function make_cache()
 
     -- set ngx.var.target
     local target = upstream_url
-    local schema, hostname
+    local scheme, hostname
     local balancer_addr
     if string_find(upstream_url, "://") then
-        schema, hostname = upstream_url:match("^(.+)://(.+)$")
+        scheme, hostname = upstream_url:match("^(.+)://(.+)$")
     else
-        schema = "http"
+        scheme = "http"
         hostname = upstream_url
     end
 
@@ -105,7 +105,7 @@ function make_cache()
             for _, upstream in pairs(upstreams) do
                 if name == upstream.service then
                     -- set target to snaker_upstream
-                    target = "http://snaker_upstream"
+                    -- target = "http://snaker_upstream"
 
                     -- set balancer_addr
                     balancer_addr = {
@@ -114,8 +114,8 @@ function make_cache()
                         name                = name,
                         service             = upstream.service,
                     }
-                    ngx.var.upstream_scheme = nil
-                    ngx.var.upstream_url = nil
+                    ngx.var.upstream_scheme = "http://"
+                    ngx.var.upstream_url = "snaker_upstream"
                     break
                 end
             end -- end for loop
@@ -127,7 +127,7 @@ function make_cache()
     end
 
     -- target is used by proxy_pass
-    ngx.var.target = target
+    -- ngx.var.target = target
 
     ngx.log(ngx.INFO, "[scheme] ", scheme, "; [hostname] ", hostname, "[target] ", target, "; [upstream_url] ", upstream_url)
 end
